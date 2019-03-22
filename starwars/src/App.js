@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.scss';
 
+import CharacterCard from './components/CharacterCard'
+
 class App extends Component {
   constructor() {
     super();
@@ -12,7 +14,6 @@ class App extends Component {
   componentDidMount() {
     this.getCharacters('https://swapi.co/api/people/');
   }
-
   getCharacters = URL => {
     // feel free to research what this code is doing.
     // At a high level we are calling an API to fetch some starwars data from the open web.
@@ -29,10 +30,26 @@ class App extends Component {
       });
   };
 
+  cmToFeet = number => {
+    const toFeet = (number / 30.48);
+    const round = toFeet.toFixed(2)
+    return `${round.charAt(0)}'${round.charAt(2)}`
+  }
+
+  capitalize = name => {
+    return name.charAt(0).toUpperCase() + name.slice(1)
+  }
+
   render() {
+    this.capitalize('jeff')
     return (
+
       <div className="App">
-        <h1 className="Header">React Wars</h1>
+        <h1>Star Wars Character List</h1>
+        <CharacterCard
+        characters={this.state.starwarsChars}
+        toFeet={this.cmToFeet}
+        capitalize={this.capitalize} />
       </div>
     );
   }
