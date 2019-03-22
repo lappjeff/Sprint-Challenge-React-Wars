@@ -9,7 +9,6 @@ export default class CharacterCard extends Component {
   }
 
   render () {
-    console.log(this.props)
     return (
       <div className='character-container'>
         {this.props.characters.map(character => (

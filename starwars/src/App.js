@@ -10,13 +10,14 @@ class App extends Component {
       starwarsChars: [
       ],
       next: '',
-      prev: ''
+      previous: '',
+      current: ''
 
     };
   }
 
   componentDidMount() {
-    this.getCharacters('https://swapi.co/api/people/?page=2');
+    this.getCharacters('https://swapi.co/api/people/?page=1');
   }
 
   getCharacters = URL => {
@@ -28,8 +29,8 @@ class App extends Component {
         return res.json();
       })
       .then(data => {
-        console.log(data)
-        this.setState({ starwarsChars: data.results, next: data.next, prev: data.previous })
+        console.log('Current page', data)
+        this.setState({ starwarsChars: data.results, next: data.next, previous: data.previous, current: URL })
       })
       .catch(err => {
         throw new Error(err);
@@ -49,13 +50,16 @@ class App extends Component {
   }
 
   changePage = direction => {
-    if (direction > 0) {
+    if (this.state.previous === 'https://swapi.co/api/people/?page=8') {
+      this.getCharacters('https://swapi.co/api/people/?page=1')
+    }
+    // else if (this.state.current === 'https://swapi.co/api/people/?page=2') {
+    //   this.getCharacters('https://swapi.co/api/people/?page=9')
+    // }
+    else if (direction > 0) {
       this.getCharacters(this.state.next)
     } else if (direction < 0){
-      this.getCharacters(this.state.prev);
-        if (this.state.prev === null) {
-          return this.state.starwarsChars
-        }
+      this.getCharacters(this.state.previous);
     }
   }
 
