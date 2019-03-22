@@ -14,7 +14,7 @@ export default class CharacterCard extends Component {
       <div className='character-container'>
         {this.props.characters.map(character => (
           <Card
-          key={Date.now()}
+          key={Date.now() + Math.random(1, 1000)}
           name={character.name}
           gender={`${this.props.capitalize(character.gender)}`}
           birthYear={character.birth_year}
